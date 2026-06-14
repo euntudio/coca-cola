@@ -90,6 +90,7 @@ body {
 .brand-pack {
     position: relative;
     width: 1330px;
+    margin: -155px auto;
 }
 
 .brand-pack .bottles {
@@ -149,7 +150,7 @@ body {
 
 .img2 {
     top: 6%;
-    right: 12%;
+    right: 9%;
     width: 20%;
 }
 
@@ -239,7 +240,7 @@ body {
 /* 움직이는 트랙 */
 .bottle-track {
     display: flex;
-    gap: 130px;
+    gap: 100px;
     will-change: transform;
     transform: translateX(0);
     overflow: hidden;
@@ -1150,7 +1151,7 @@ body {
 
 .cokeplay-best .best-head .taste-link a {
     color: #fff;
-    font-size: 14px;
+    font-size: 24px;
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
@@ -1158,8 +1159,8 @@ body {
 }
 
 .cokeplay-best .best-head .taste-link img {
-    width: 14px;
-    height: 14px;
+    width: 24px;
+    height: 24px;
     display: block;
     filter: brightness(1);
 }
