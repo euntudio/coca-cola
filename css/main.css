@@ -1,0 +1,1541 @@
+@charset "utf-8";
+
+@import url('reset.css');
+@import url('common.css');
+
+body {
+    height: 200vh;
+    /* 스크롤 테스트용 */
+    background: #16151C;
+    position: relative;
+    color: #fff;
+    font-family: 'TT-Norms-Pro';
+}
+
+/* 헤더 */
+.header {
+    width: 100%;
+    height: 100px;
+    color: #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    font-family: 'TT-Norms-Pro';
+    z-index: 99;
+}
+
+.header .inner {
+    max-width: 1920px;
+    width: calc(100% - 60px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .inner .logo {
+    width: 120px;
+}
+
+.header .inner .logo a {
+    width: 100%;
+    display: block;
+}
+
+.header .inner .logo a img {
+    width: 100px;
+}
+
+.header .inner .nav .gnb {
+    display: flex;
+    gap: 50px;
+}
+
+.header .inner .nav .gnb li:hover {
+    color: #D4080B;
+    font-weight: 500;
+}
+
+.header .inner .nav .gnb li .depth-01 {
+    padding: 12px 0;
+    display: block;
+}
+
+.header .inner .util {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* 메인 비주얼 */
+.main-visual {
+    position: relative;
+    height: 100vh;
+}
+
+.fixed-center {
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 100px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    z-index: 5;
+    pointer-events: none;
+}
+
+.brand-pack {
+    position: relative;
+    width: 1330px;
+}
+
+.brand-pack .bottles {
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.brand-pack .main_logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1010px;
+    z-index: 2;
+}
+
+.slogan {
+    font-family: 'TT-Norms-Pro';
+    position: relative;
+    margin-top: -250px;
+    color: #fff;
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    line-height: 1.1;
+    z-index: 3;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+.float-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    pointer-events: none;
+
+}
+
+/* 네모 이미지 공통 */
+.parallax {
+    position: absolute;
+    width: 200px;
+    border-radius: 10px;
+    transition: transform 0.5s ease-out;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.img1 {
+    top: -10%;
+    left: 15%;
+    width: 12%;
+}
+
+.img2 {
+    top: 6%;
+    right: 12%;
+    width: 20%;
+}
+
+.img3 {
+    top: 50%;
+    left: 20%;
+}
+
+.img4 {
+    bottom: 10%;
+    right: 20%;
+}
+
+.img5 {
+    bottom: -48%;
+    left: 5%;
+}
+
+/* about */
+.about {
+    height: 60vh;
+}
+
+.about .inner {
+    max-width: 1920px;
+    width: calc(100% - 474px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.about-text {
+    font-weight: 900;
+    font-size: 70px;
+    overflow: hidden;
+    /* SplitText 라인 잘림 방지 */
+}
+
+.text_wrap {
+    margin-top: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+}
+
+.text_wrap h3 {
+    font-weight: bold;
+    line-height: 1.6;
+    font-size: 24px;
+    color: #D4080B;
+}
+
+.text_wrap p {
+    line-height: 1.6;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/* 처음엔 안 보이게 */
+.text_wrap .text-01,
+.text_wrap .text-02 {
+    opacity: 0;
+    transform: translateY(80px);
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+/* bottles */
+/* 병 리스트 섹션 전체 */
+
+.bottle {
+    padding-top: 100px;
+    background: url('../img/wave.svg') center center / 100% no-repeat;
+}
+
+/* 가로 트랙 뷰포트(창문 역할) */
+.bottle-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* 움직이는 트랙 */
+.bottle-track {
+    display: flex;
+    gap: 130px;
+    will-change: transform;
+    transform: translateX(0);
+    overflow: hidden;
+}
+
+/* 각 병 카드 */
+.bottle-item {
+    width: 138px;
+    flex-shrink: 0;
+    border-radius: 24px;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .3s ease;
+}
+
+.bottle-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    background: rgba(255, 0, 0, 0.1);
+}
+
+/* 호버 시 살짝 띄우는 연출 */
+.bottle-item:hover {
+    transform: translateY(-8px) scale(1.03);
+}
+
+
+/* taste */
+.taste {
+    position: relative;
+    color: #fff;
+    padding: 180px 0;
+}
+.taste .inner {
+    max-width: 1920px;
+    width: calc(100% - 474px);
+    margin: 0 auto;
+}
+
+.taste .inner .taste-title h2 {
+    font-size: 70px;
+    font-weight: 900;
+}
+
+.taste .inner .taste-title P {
+    font-size: 48px;
+    font-weight: bold;
+    text-align: end;
+    margin-top: 30px;
+}
+
+.taste-wrapper {
+    padding: 180px 0 360px;
+    position: relative;
+    height: 708px;
+}
+
+/* 모든 슬라이드는 같은 자리에 겹쳐놓고 우리가 어떤 걸 보여줄지 결정 */
+.taste-slide {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    opacity: 0;
+    transform: translateX(40px);
+    /* 화면에 들어오기 전 오른쪽 쪽으로 살짝 대기 */
+    pointer-events: none;
+    will-change: opacity, transform;
+}
+
+.taste-slide.is-active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.taste-slide .taste-right .taste-card img {
+    width: 708px;
+}
+
+@media (max-width:768px) {
+    .taste-slide {
+        grid-template-columns: 1fr;
+    }
+
+    .taste-card {
+        max-width: 80vw;
+        padding: 30px;
+    }
+}
+
+
+/* 왼쪽 텍스트 */
+.taste-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.taste-desc {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.taste .taste-link {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-top: 20px;
+}
+
+.taste .taste-link a {
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.taste .taste-link img {
+    width: 18px;
+    height: auto;
+}
+
+.taste-meta span {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.taste-meta h3 {
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+/* 모바일 대응 */
+@media (max-width:768px) {
+    .bottle-item {
+        width: 130px;
+        height: 160px;
+        border-radius: 16px;
+    }
+
+    .bottle-headline h2 {
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
+    }
+}
+
+/* vidio */
+.zero-coke {
+    position: relative;
+    color: #fff;
+    padding-top: 360px;
+}
+
+.zero-coke .inner {
+    position: relative;
+    max-width: 1920px;
+    width: calc(100% - 474px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.coke-player {
+    flex: 1 1 60%;
+    display: flex;
+
+    /* 스케일 애니메이션 기준점 */
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
+
+.coke-player-ratio {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+}
+
+.coke-player-ratio iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+}
+
+.coke-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.5;
+    color: #fff;
+}
+
+.coke-headline {
+    font-size: 36px;
+    font-weight: bold;
+    color: #D4080B;
+    text-align: right;
+
+}
+
+.zero-coke .coke-copy .taste-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-top: 100px;
+}
+
+.zero-coke .coke-copy .taste-link a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.zero-coke .coke-copy .taste-link img {
+    width: 16px;
+    height: 16px;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+    .zero-coke .inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+    }
+
+    .coke-headline {
+        font-size: 32px;
+        line-height: 1.2;
+    }
+
+    .coke-player-ratio {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+}
+
+.sprite {
+    position: relative;
+    color: #fff;
+    padding: 180px 0;
+}
+
+.sprite .inner {
+    position: relative;
+    max-width: 1920px;
+    width: calc(100% - 474px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 비디오 영역 */
+.sprite-player {
+    flex: 1 1 60%;
+    display: flex;
+    justify-content: end;
+    /* 애니메이션 기준점 */
+    transform-origin: center center;
+    will-change: transform, opacity;
+}
+
+.sprite-player-ratio {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+}
+
+.sprite-player-ratio iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 텍스트 영역 */
+.sprite-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    line-height: 1.5;
+    color: #fff;
+    order: -1;
+}
+
+.sprite-headline {
+    font-size: 36px;
+    font-weight: bold;
+    color: #9BE15D;
+}
+
+.sprite .taste-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-top: 100px;
+}
+
+.sprite .taste-link a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.sprite .taste-link img {
+    width: 16px;
+    height: 16px;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+    .sprite .inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+    }
+
+    .sprite-headline {
+        font-size: 32px;
+        line-height: 1.2;
+    }
+
+    .sprite-player-ratio {
+        max-width: 100%;
+        border-radius: 12px;
+    }
+}
+
+/* 섹션 전체 */
+.brand-marquee {
+    color: #fff;
+    overflow: hidden;
+}
+
+.brand-marquee .inner {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 120px 0;
+}
+
+/* 타이틀 영역 */
+.brand-head {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.brand-title {
+    font-size: 70px;
+    font-weight: 900;
+    line-height: 1.4;
+    color: #fff;
+    margin: 0;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.brand-desc {
+    font-size: 48px;
+    font-weight: bold;
+    color: #bebebe;
+    line-height: 1.5;
+}
+
+/* 두 줄 래퍼 */
+.brand-rows {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* 한 줄 */
+.brand-row {
+    position: relative;
+    width: 100%;
+}
+
+/* 트랙 (흘러가는 리스트) */
+.brand-track {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+}
+
+/* 카드 하나 */
+.brand-card {
+    flex: 0 0 auto;
+    width: 339px;
+    height: 349px;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+
+    transition:
+        background .25s ease,
+        border .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+/* 로고 이미지 기본 상태: 흑백/저채도/살짝 죽여 */
+.brand-logo {
+    max-width: 339px;
+    max-height: 349px;
+    object-fit: contain;
+
+    filter: grayscale(1) brightness(0.6);
+    opacity: 0.5;
+    transition: filter .25s ease, opacity .25s ease, transform .25s ease;
+    will-change: filter, opacity, transform;
+}
+
+/* 화살표: 기본은 숨김 */
+.brand-arrow {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    font-size: 57px;
+    line-height: 1;
+    color: #ffffff;
+    /* 코카콜라 레드나 강조색 */
+    letter-spacing: -0.03em;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .25s ease, transform .25s ease;
+    pointer-events: none;
+    /* 클릭 방해 안 하도록 */
+}
+
+/* hover 시 효과 */
+.brand-card:hover {
+    transform: translateY(-4px) scale(1.03);
+}
+
+.brand-card:hover .brand-logo {
+    filter: grayscale(0) brightness(1);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.brand-card:hover .brand-arrow {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 미닛메이드: 레몬 옐로우 */
+.brand--minute-maid:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 255, 120, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 255, 120, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 255, 120, 0.4),
+        0 0 40px rgba(255, 255, 120, 0.55);
+}
+
+.brand--minute-maid:hover .brand-arrow {
+    color: #fff67a;
+}
+
+/* 코카콜라: 강한 레드 */
+.brand--coca-cola:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 0, 0, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 0, 0, 0.4),
+        0 0 40px rgba(255, 0, 0, 0.5);
+}
+
+.brand--coca-cola:hover .brand-arrow {
+    color: #ff2a2a;
+}
+
+/* 스프라이트: 라임 그린 */
+.brand--sprite:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(140, 255, 80, 0.4) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(140, 255, 80, 0.6);
+    box-shadow:
+        0 30px 80px rgba(140, 255, 80, 0.35),
+        0 0 40px rgba(140, 255, 80, 0.45);
+}
+
+.brand--sprite:hover .brand-arrow {
+    color: #8cff4f;
+}
+
+/* 닥터페퍼: 버건디 */
+.brand--dr-papper:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(140, 0, 40, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(140, 0, 40, 0.6);
+    box-shadow:
+        0 30px 80px rgba(140, 0, 40, 0.4),
+        0 0 40px rgba(140, 0, 40, 0.5);
+}
+
+.brand--dr-papper:hover .brand-arrow {
+    color: #c3274f;
+}
+
+/* 써니텐: 네온 옐로/오렌지 */
+.brand--sunny-ten:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 220, 0, 0.5) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 220, 0, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 220, 0, 0.4),
+        0 0 40px rgba(255, 220, 0, 0.6);
+}
+
+.brand--sunny-ten:hover .brand-arrow {
+    color: #ffe14a;
+}
+
+/* 휘오 (vio): 맑은 물 / 시안 */
+.brand--vio:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 0, 212, 0.4) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid #ff23a3;
+    box-shadow:
+        0 30px 80px rgba(255, 0, 212, 0.4),
+        0 0 40px rgba(255, 0, 212, 0.5);
+}
+
+.brand--vio:hover .brand-arrow {
+    color: #ff00d499;
+}
+
+/* 태양의마테차: 브라운/GOLD-ish */
+.brand--matecha:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(181, 140, 70, 0.4) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(181, 140, 70, 0.6);
+    box-shadow:
+        0 30px 80px rgba(181, 140, 70, 0.4),
+        0 0 40px rgba(181, 140, 70, 0.55);
+}
+
+.brand--matecha:hover .brand-arrow {
+    color: #d9b878;
+}
+
+/* 캐나다드라이: 진한 그린+골드 */
+.brand--canada-dry:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(0, 110, 50, 0.5) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(0, 110, 50, 0.6);
+    box-shadow:
+        0 30px 80px rgba(0, 110, 50, 0.4),
+        0 0 40px rgba(0, 110, 50, 0.55);
+}
+
+.brand--canada-dry:hover .brand-arrow {
+    color: #44ff7a;
+}
+
+/* 조지아: 로스티한 골드/브라운 */
+.brand--zorzia:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(160, 120, 60, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(160, 120, 60, 0.6);
+    box-shadow:
+        0 30px 80px rgba(160, 120, 60, 0.4),
+        0 0 40px rgba(160, 120, 60, 0.55);
+}
+
+.brand--zorzia:hover .brand-arrow {
+    color: #d3b379;
+}
+
+/* 식후비법 W차: 딥티 그린 */
+.brand--w-cha:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(30, 80, 30, 0.5) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(30, 80, 30, 0.6);
+    box-shadow:
+        0 30px 80px rgba(30, 80, 30, 0.4),
+        0 0 40px rgba(30, 80, 30, 0.55);
+}
+
+.brand--w-cha:hover .brand-arrow {
+    color: #8ddf6e;
+}
+
+/* 토레타: 파스텔 민트/아쿠아 */
+.brand--toreta:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(0, 210, 190, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(0, 210, 190, 0.6);
+    box-shadow:
+        0 30px 80px rgba(0, 210, 190, 0.4),
+        0 0 40px rgba(0, 210, 190, 0.5);
+}
+
+.brand--toreta:hover .brand-arrow {
+    color: #2fffe9;
+}
+
+/* 코코팜: 복숭아/핑크 크리미 */
+.brand--cocopam:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 140, 180, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 140, 180, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 140, 180, 0.4),
+        0 0 40px rgba(255, 140, 180, 0.5);
+}
+
+.brand--cocopam:hover .brand-arrow {
+    color: #ff7cab;
+}
+
+/* 강원평창수: 시원한 블루 */
+.brand--pyeongchang:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(80, 160, 255, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(80, 160, 255, 0.6);
+    box-shadow:
+        0 30px 80px rgba(80, 160, 255, 0.4),
+        0 0 40px rgba(80, 160, 255, 0.55);
+}
+
+.brand--pyeongchang:hover .brand-arrow {
+    color: #7ab0ff;
+}
+
+/* 씨그램: 라임/민트 스파클 */
+.brand--c-gram:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(120, 255, 200, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(120, 255, 200, 0.6);
+    box-shadow:
+        0 30px 80px rgba(120, 255, 200, 0.4),
+        0 0 40px rgba(120, 255, 200, 0.55);
+}
+
+.brand--c-gram:hover .brand-arrow {
+    color: #8affd9;
+}
+
+/* 환타: 비비드 오렌지 */
+.brand--fanta:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 120, 0, 0.5) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 120, 0, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 120, 0, 0.4),
+        0 0 40px rgba(255, 120, 0, 0.55);
+}
+
+.brand--fanta:hover .brand-arrow {
+    color: #ff9a3c;
+}
+
+/* 파워에이드: 전해질 블루 */
+.brand--power-ade:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(0, 170, 255, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(0, 170, 255, 0.6);
+    box-shadow:
+        0 30px 80px rgba(0, 170, 255, 0.4),
+        0 0 40px rgba(0, 170, 255, 0.5);
+}
+
+.brand--power-ade:hover .brand-arrow {
+    color: #29c8ff;
+}
+
+/* 과일촌: 과즙 오렌지-복숭아 */
+.brand--fruit:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 170, 60, 0.5) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 170, 60, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 170, 60, 0.4),
+        0 0 40px rgba(255, 170, 60, 0.55);
+}
+
+.brand--fruit:hover .brand-arrow {
+    color: #ffbf6a;
+}
+
+/* 갈아만든배: 배 컬러(연한 옐로우베이지) */
+.brand--pear:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 235, 160, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 235, 160, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 235, 160, 0.4),
+        0 0 40px rgba(255, 235, 160, 0.55);
+}
+
+.brand--pear:hover .brand-arrow {
+    color: #ffe27a;
+}
+
+/* 휘오 울림워터: 수분 블루+라이트 */
+.brand--vio-uilm:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(120, 180, 255, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(120, 180, 255, 0.6);
+    box-shadow:
+        0 30px 80px rgba(120, 180, 255, 0.4),
+        0 0 40px rgba(120, 180, 255, 0.55);
+}
+
+.brand--vio-uilm:hover .brand-arrow {
+    color: #97baff;
+}
+
+/* 아이로하스: 깨끗한 투명+부드러운 하늘색 */
+.brand--i-rohas:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(180, 230, 255, 0.45) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(180, 230, 255, 0.6);
+    box-shadow:
+        0 30px 80px rgba(180, 230, 255, 0.4),
+        0 0 40px rgba(180, 230, 255, 0.55);
+}
+
+.brand--i-rohas:hover .brand-arrow {
+    color: #c9ecff;
+}
+
+/* 비타민워터: 마젠타/핑크 하이라이트 */
+.brand--vitamin-water:hover {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 0, 128, 0.4) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 0, 128, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 0, 128, 0.4),
+        0 0 40px rgba(255, 0, 128, 0.5);
+}
+
+.brand--vitamin-water:hover .brand-arrow {
+    color: #ff3fa4;
+}
+
+
+/* 흐르는 애니메이션 */
+.brand-row-top .brand-track {
+    animation: marquee-left 20s linear infinite;
+}
+
+.brand-row-bottom .brand-track {
+    animation: marquee-right 20s linear infinite;
+}
+
+/* hover 시 흐름 멈추기 (읽을 수 있게) */
+.brand-row-top .brand-track:hover,
+.brand-row-bottom .brand-track:hover {
+    animation-play-state: paused;
+}
+
+/* keyframes */
+@keyframes marquee-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee-right {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .brand-marquee {
+        padding: 80px 16px;
+    }
+
+    .brand-marquee .inner {
+        width: 100%;
+    }
+
+    .brand-card {
+        width: 150px;
+        height: 96px;
+        border-radius: 10px;
+    }
+
+    .brand-logo {
+        max-width: 100px;
+        max-height: 40px;
+    }
+
+    .brand-arrow {
+        font-size: 13px;
+        left: 12px;
+        bottom: 10px;
+    }
+
+    .brand-rows {
+        gap: 24px;
+    }
+}
+
+/* 코카-플레이 베스트 굿즈 */
+.cokeplay-best {
+    color: #fff;
+    position: relative;
+}
+
+.cokeplay-best .inner {
+    max-width: 1920px;
+    margin: 0 auto;
+    width: calc(100% - 474px);
+    padding: 180px 0 300px;
+}
+
+/* 헤더 영역 */
+.cokeplay-best .best-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+}
+
+.cokeplay-best .title-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cokeplay-best .best-title {
+    font-size: 70px;
+    font-weight: 900;
+    color: #fff;
+}
+
+.cokeplay-best .best-desc {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+/* 우측 "보러 가기" 링크 (taste-link 재사용 형태) */
+.cokeplay-best .best-head .taste-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    line-height: 1;
+    margin-top: 4px;
+}
+
+.cokeplay-best .best-head .taste-link a {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.cokeplay-best .best-head .taste-link img {
+    width: 14px;
+    height: 14px;
+    display: block;
+    filter: brightness(1);
+}
+
+/* 카드 그리드 */
+.cokeplay-best .best-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 30px;
+}
+
+/* 카드 */
+.cokeplay-best .best-item {
+    width: 31.95%;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+
+}
+
+/* 이미지 프레임 */
+.cokeplay-best .best-thumb {
+    border-radius: 10px;
+    aspect-ratio: 1 / 1.1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+    transition: all 0.3s ease;
+}
+
+/* 썸네일 이미지 */
+.cokeplay-best .best-thumb img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: brightness(0.6);
+    transition: filter 0.3s ease;
+}
+
+/* 카테고리명 */
+.cokeplay-best .best-name {
+    margin-top: 16px;
+    font-size: 24px;
+    font-weight: 500;
+    color: #bebebe;
+    line-height: 1.5;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 40px;
+}
+
+/* hover 효과 */
+.cokeplay-best .best-item:hover .best-thumb {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(255, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0) 70%);
+    border: 1px solid rgba(255, 0, 0, 0.6);
+    box-shadow:
+        0 30px 80px rgba(255, 0, 0, 0.4),
+        0 0 40px rgba(255, 0, 0, 0.5);
+}
+
+.cokeplay-best .best-item:hover .best-thumb img {
+    filter: brightness(1);
+}
+
+.cokeplay-best .best-item:hover .best-name {
+    color: #fff;
+}
+
+/* 반응형: 태블릿 */
+@media (max-width: 1024px) {
+
+    .cokeplay-best .inner {
+        width: calc(100% - 64px);
+    }
+
+    .best-title {
+        font-size: 28px;
+        line-height: 1.3;
+    }
+
+    .best-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .best-head .taste-link {
+        margin-top: 0;
+    }
+
+    .best-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px 24px;
+    }
+}
+
+/* 반응형: 모바일 */
+@media (max-width: 600px) {
+
+    .cokeplay-best {
+        padding: 100px 16px;
+    }
+
+    .cokeplay-best .inner {
+        width: 100%;
+    }
+
+    .best-title {
+        font-size: 22px;
+        line-height: 1.3;
+    }
+
+    .best-desc {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .best-head .taste-link a {
+        font-size: 13px;
+    }
+
+    .best-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .best-name {
+        font-size: 14px;
+    }
+}
+
+/* === Sustainability section === */
+.sustainability {
+    position: relative;
+    min-height: 120vh;
+    /* 여유 있는 스크롤 구간 */
+    display: block;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* 배경 이미지 컨테이너 */
+.sustainability .sust-wrap {
+    position: relative;
+    height: 120vh;
+    /* 이미지가 움직일 공간 */
+}
+
+/* 움직이는 배경 이미지 */
+.sustainability .sust-bg {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    /* 살짝 크게 깔아서 가장자리 노출 방지 */
+    width: 100vw;
+    height: 120vh;
+    transform: translateX(-50%);
+    object-fit: 100%;
+    will-change: transform;
+    filter: saturation(1.05) contrast(1.05);
+}
+
+/* 가독성용 화면 전체 그라데이션 (박스 대신 분위기만) */
+.sustainability::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+            rgba(0, 0, 0, .35) 0%,
+            rgba(0, 0, 0, .15) 30%,
+            rgba(0, 0, 0, .15) 70%,
+            rgba(0, 0, 0, .45) 100%);
+}
+
+/* 텍스트 영역: 스티키로 고정 느낌 */
+.sustainability .text-wrap {
+    position: sticky;
+    top: 30vh;
+    /* 스크롤 시 머무는 높이 */
+    max-width: 1920px;
+    margin: 0 auto;
+    z-index: 2;
+    text-align: center;
+}
+
+.sust-title {
+    font-weight: 900;
+    font-size: 70px;
+    line-height: 1.5;
+}
+
+.sust-sub {
+    font-size: 48px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.sust-desc {
+    margin-top: 80px;
+    max-width: 1920px;
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: 1.7;
+    opacity: .95;
+}
+
+.sustainability .taste-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 80px;
+    font-weight: 700;
+}
+
+.sustainability .taste-link a {
+    color: #fff;
+}
+
+.sustainability .taste-link a img {
+    width: 18px;
+}
+
+/* 모바일 튜닝 */
+@media (max-width: 768px) {
+    .sustainability .sust-wrap {
+        height: 110vh;
+    }
+
+    .sustainability .sust-bg {
+        width: 130vw;
+        /* 모바일에서 컷 방지 */
+        height: 115vh;
+    }
+
+    .sustainability .text-wrap {
+        top: 14vh;
+        padding: 0 20px;
+    }
+}
+
+.footer {
+    color: #fff;
+    position: relative;
+}
+
+.footer .inner {
+    max-width: 1920px;
+    margin: 0 auto;
+    width: calc(100% - 474px);
+    padding: 100px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+/* --- 왼쪽 --- */
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer-logo {
+    width: 300px;
+}
+
+.footer-link {
+    color: #d4080b;
+    font-weight: 600;
+    font-size: 24px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.footer-link:hover {
+    opacity: 0.7;
+}
+
+.copyright {
+    font-size: 16px;
+    color: #999;
+    margin-top: 8px;
+}
+
+/* --- 오른쪽 --- */
+.footer-right {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 95px;
+    justify-content: end;
+}
+
+.footer-menu,
+.footer-sns {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.footer-menu a,
+.footer-sns a {
+    color: #ccc;
+    font-size: 20px;
+    text-decoration: none;
+    transition: color .2s ease, opacity .2s ease;
+}
+
+.footer-menu a:hover,
+.footer-sns a:hover {
+    color: #fff;
+    opacity: 0.8;
+}
+
+/* SNS는 살짝 강조 */
+.footer-sns a {
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.footer-menu>li:first-child{
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+    .footer .inner {
+        width: calc(100% - 64px);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 40px;
+    }
+
+    .footer-right {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px 40px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer {
+        padding: 60px 16px;
+    }
+
+    .footer-logo {
+        width: 140px;
+    }
+
+    .footer-right {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .footer-menu a,
+    .footer-sns a {
+        font-size: 13px;
+    }
+}

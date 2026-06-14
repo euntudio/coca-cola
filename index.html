@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코카콜라</title>
+    <link rel="stylesheet" href="css/main.css">
+
+    <head>
+        <script src="lib/gsap.min.js"></script>
+        <script src="lib/ScrollTrigger.min.js"></script>
+        <script src="lib/SplitText.min.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                gsap.registerPlugin(ScrollTrigger);
+
+                gsap.to(".img1", {
+                    y: 200,                // 얼마나 내려갈지
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".img1",   // 이 이미지가 기준
+                        start: "top 80%",   // 이미지 top이 뷰포트 80% 지점에 왔을 때부터
+                        end: "top -10%",     // 이미지 top이 뷰포트 20% 지점까지
+                        scrub: true,
+                        //markers: true,
+                    },
+                });
+
+                gsap.to(".img2", {
+                    y: 400,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".img2",
+                        start: "top 90%",
+                        end: "top 0%",
+                        scrub: true,
+                        //markers: true,
+                    },
+                });
+
+                gsap.to(".img3", {
+                    y: 200,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".img3",
+                        start: "top 90%",
+                        end: "top 10%",
+                        scrub: true
+                    }
+                });
+
+                gsap.to(".img4", {
+                    y: 200,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".img4",
+                        start: "top 95%",
+                        end: "top 15%",
+                        scrub: true
+                    }
+                });
+
+                gsap.to(".img5", {
+                    y: 200,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".img5",
+                        start: "top 95%",
+                        end: "top -10%",
+                        scrub: true
+                    }
+                });
+
+                //about 섹션 텍스트 효과
+                gsap.registerPlugin(ScrollTrigger, SplitText);
+
+                const splitTitle = new SplitText(".about-text", { type: "lines" });
+                gsap.from(splitTitle.lines, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    stagger: 0.15,
+                    scrollTrigger: {
+                        trigger: ".about-text",
+                        start: "top 80%",
+                        toggleActions: "play none none reverse",
+                    }
+                });
+
+                gsap.to(".text-01", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".text-01",
+                        start: "top 85%",
+                        end: "bottom 60%",
+                        scrub: false,
+                        toggleActions: "play none none reverse"
+                    }
+                });
+
+                gsap.to(".text-02", {
+                    opacity: 1.5,
+                    y: 0,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".text-02",
+                        start: "top 85%",
+                        end: "bottom 60%",
+                        scrub: false,
+                        toggleActions: "play none none reverse"
+                    },
+                });
+
+                //bottle 섹션 효과
+                const track = document.querySelector('.bottle-track');
+                const section = document.querySelector('.bottle-section');
+                const maxMove = 100; // 최대 흔들림(px). 숫자 키우면 더 많이 흔들림.
+
+                if (!track) {
+                    console.error(".bottle-track");
+                    return;
+                }
+
+                // 마우스 움직임 따라 좌우로 부드럽게 이동
+                window.addEventListener('mousemove', (e) => {
+                    // 뷰포트 넓이 대비 현재 마우스 위치 비율 (0~1)
+                    const ratio = e.clientX / window.innerWidth;
+
+                    // -1 ~ 1 로 맵핑 (가운데일 때 0)
+                    const mapped = (ratio - 0.5) * 2;
+
+                    // 자연스러운 시각 느낌: 마우스를 오른쪽으로 가면 트랙은 왼쪽으로 살짝 이동
+                    const targetX = mapped * maxMove * -1;
+
+                    gsap.to(track, {
+                        x: targetX,
+                        duration: 0.6,
+                        ease: "power3.out"
+                    });
+                });
+
+                //taste 섹션
+                gsap.registerPlugin(ScrollTrigger, SplitText);
+
+                const tasteTitle = new SplitText(".taste-title", { type: "lines" });
+                gsap.from(tasteTitle.lines, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    stagger: 0.15,
+                    scrollTrigger: {
+                        trigger: ".taste-title",
+                        start: "top 80%",
+                        toggleActions: "play none none reverse",
+                    }
+                });
+
+                //슬라이드 박스
+                gsap.registerPlugin(ScrollTrigger);
+
+                const slides = gsap.utils.toArray(".taste-slide");
+                const total = slides.length;
+
+                let currentIndex = 0; // 현재 보여주는 슬라이드 인덱스
+                let animating = false; // 전환 중에 또 전환 안 겹치게 막는 플래그
+
+                // 초기 상태: 첫 번째만 보이게
+                gsap.set(slides, (i) => ({
+                    opacity: i === 0 ? 1 : 0,
+                    x: i === 0 ? 0 : 40,
+                    pointerEvents: i === 0 ? "auto" : "none"
+                }));
+                slides[0].classList.add("is-active");
+
+                // ScrollTrigger로 진행도만 관리
+                ScrollTrigger.create({
+                    trigger: ".taste-wrapper",
+                    start: "top top",
+                    end: "+=" + window.innerHeight * (total - 1) * 1.5, // 스크롤 총 길이. 조절 가능.
+                    pin: true,
+                    scrub: 0.4, // 반응은 빠르게. (0.3~0.5 추천)
+                    snap: {
+                        snapTo: (value) => {
+                            const seg = 1 / (total - 1);
+                            return Math.round(value / seg) * seg;
+                        },
+                        duration: 0.15,   // 짧게 "탁" 붙는 마무리만
+                        ease: "power1.out"
+                    },
+                    onUpdate: (self) => {
+                        // 0~1 사이 progress 값을 현재 슬라이드 인덱스로 변환
+                        const rawIndex = self.progress * (total - 1);
+                        const targetIndex = Math.round(rawIndex); // 가까운 슬라이드 골라
+
+                        if (targetIndex !== currentIndex && !animating) {
+                            switchSlide(currentIndex, targetIndex);
+                        }
+                    }
+                });
+
+                function switchSlide(from, to) {
+                    animating = true;
+
+                    const currentSlide = slides[from];
+                    const nextSlide = slides[to];
+
+                    // 현재 슬라이드: 왼쪽(-40px)으로 살짝 빠지면서 사라지기
+                    gsap.to(currentSlide, {
+                        opacity: 0,
+                        x: -40,
+                        pointerEvents: "none",
+                        duration: 0.45,
+                        ease: "power2.out",
+                        onComplete: () => {
+                            currentSlide.classList.remove("is-active");
+                        }
+                    });
+
+                    // 다음 슬라이드: 오른쪽(+40px)에서 제자리(0)로 스르륵 들어오기
+                    gsap.fromTo(nextSlide,
+                        { opacity: 0, x: 40, pointerEvents: "none" },
+                        {
+                            opacity: 1,
+                            x: 0,
+                            pointerEvents: "auto",
+                            duration: 0.45,
+                            ease: "power2.out",
+                            onComplete: () => {
+                                nextSlide.classList.add("is-active");
+                                currentIndex = to;
+                                animating = false;
+                            }
+                        }
+                    );
+                }
+
+                //zero-coke-vidio
+                gsap.fromTo(".zero-coke",
+                    { scale: 0.7, opacity: 0 },
+                    {
+                        scale: 1,
+                        opacity: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: ".zero-coke",
+                            start: "top 40%",
+                            end: "center center",
+                            scrub: true
+                        }
+                    }
+                );
+
+                //coke 텍스트
+                const splitZeroCoke = new SplitText(".coke-headline", { type: "lines" });
+                gsap.from(splitZeroCoke.lines, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power2.out",
+                    stagger: 0.15,
+                    scrollTrigger: {
+                        trigger: ".coke-copy",
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+
+                // 🍋 Sprite 영상 등장/확대 효과
+                gsap.fromTo(".sprite",
+                    { scale: 0.7, opacity: 0 },
+                    {
+                        scale: 1,
+                        opacity: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: ".sprite",
+                            start: "top 80%",
+                            end: "center center",
+                            scrub: true
+                        }
+                    }
+                );
+
+                // 🍋 Sprite 텍스트 등장 효과
+                const splitSprite = new SplitText(".sprite-copy", { type: "lines" });
+                gsap.from(splitSprite.lines, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    stagger: 0.15,
+                    scrollTrigger: {
+                        trigger: ".sprite-copy",
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+
+                //지속가능한 미래
+                gsap.utils.toArray("[data-scroll]").forEach((el) => {
+                    const y = Number(el.dataset.scroll) || 0;   // 예: -18 => 반대 방향으로 위/아래 이동
+                    gsap.to(el, {
+                        yPercent: y,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: el,             // 해당 이미지가 섹션 안에서
+                            start: "top bottom",     // 화면 바닥에서 들어올 때부터
+                            end: "bottom top",       // 화면 위로 빠질 때까지
+                            scrub: 1                 // 스크롤 값에 따라 부드럽게
+                            // markers: true
+                        }
+                    });
+                });
+            });//script end
+        </script>
+    </head>
+
+<body>
+    <header class="header">
+        <div class="inner">
+            <h1 class="logo">
+                <a href="#">
+                    <img src="img/red_logo.svg" alt="로고">
+                </a>
+            </h1><!-- .logo end -->
+
+            <nav class="nav">
+                <ul class="gnb">
+                    <li><a href="#" class="depth-01">BRAND</a></li>
+                    <li><a href="#" class="depth-01">OUR COMPANY</a></li>
+                    <li><a href="#" class="depth-01">DISCOVER</a></li>
+                    <li><a href="#" class="depth-01">SUSTAINABILITY</a></li>
+                </ul><!-- .gnb end -->
+            </nav>
+
+            <div class="util">
+                <a href="#"><img src="img/coca-play_logo.svg" alt="코크-플레이" class="cokeplay"></a>
+                <img src="img/icon-search.svg" alt="검색">
+            </div><!-- .icon end -->
+
+        </div><!-- .inner end -->
+    </header>
+
+    <main class="main">
+        <section class="main-visual">
+            <div class="fixed-center">
+
+                <!-- 병 + 로고 겹치는 영역 -->
+                <div class="brand-pack">
+                    <img src="img/coca-cola-img.png" alt="Bottles" class="bottles">
+                    <img src="img/white_logo.svg" alt="Coca-Cola" class="main_logo">
+                </div><!-- .brand-pack end -->
+
+                <!-- 로고 아래 슬로건 -->
+                <p class="slogan">REAL MAGIC</p>
+            </div><!-- .fixed-center end -->
+
+            <div class="float-wrap">
+                <img src="img/main_visual-img-01.png" class="parallax img1" alt="">
+                <img src="img/main_visual-img-02.png" class="parallax img2" alt="">
+                <img src="img/main_visual-img-03.png" class="parallax img3" alt="">
+                <img src="img/main_visual-img-04.png" class="parallax img4" alt="">
+                <img src="img/main_visual-img-05.png" class="parallax img5" alt="">
+            </div><!-- .float-wrap end -->
+        </section><!-- .main_visual end -->
+
+        <section class="about">
+            <div class="inner">
+                <h2 class="about-text">
+                    ABOUT<br />
+                    COCA-COLA
+                </h2><!-- .about-text end -->
+                <div class="text_wrap">
+                    <div class="text-01">
+                        <h3>TASTE<br />
+                            THE<br />
+                            REAL MAGIC</h3>
+                        <p>마법은 예기치 않은 순간에 찾아와 우리의 일상을 특별하게 만들어줍니다.<br />
+                            코카-콜라의 진정한 마법은 사람들이 함께 모일 때 일어나며<br />
+                            서로의 것들을 공유하고 함께하는 순간에 나타납니다.</p>
+                    </div><!-- .text-01 end -->
+                    <div class="text-02">
+                        <h3>REFRESH<br />
+                            THE WORLD<br />
+                            MAKE A<br />
+                            DIFFERENCE</h3>
+                        <p>코카-콜라 컴퍼니(Coca‑Cola Company)는<br />
+                            전 세계 200여 개국에 진출한 글로벌 종합 음료 회사로 성장했습니다.<br />
+                            총 200여 개 이상의 브랜드 제품을 보유하고 있으며,<br />
+                            전 세계에서 매일 22억 잔 이상의 음료가 판매되고 있습니다.</p>
+                    </div><!-- .text-01 end -->
+                </div><!-- .text_wrap end -->
+            </div><!-- .inner -->
+        </section><!-- .about end -->
+
+        <section class="bottle">
+            <div class="bottle-viewport">
+                <div class="bottle-track">
+                    <div class="watch-item"><img src="img/taste-00.png" alt=""></div>
+                    <div class="watch-item"><img src="img/taste-02.png" alt=""></div>
+                    <div class="watch-item"><img src="img/taste-03.png" alt=""></div>
+                    <div class="watch-item"><img src="img/taste-04.png" alt=""></div>
+                    <div class="watch-item"><img src="img/taste-05.png" alt=""></div>
+                    <div class="watch-item"><img src="img/taste-06.png" alt=""></div>
+                    <div class="watch-item"><img src="img/taste-07.png" alt=""></div>
+                    <div class="watch-item"><img src="img/taste-08.png" alt=""></div>
+                </div><!-- .watch-track end -->
+            </div><!-- .watch-viewport end -->
+        </section><!-- .bottles end -->
+
+        <section class="taste">
+            <div class="inner">
+                <div class="taste-title">
+                    <h2>
+                        THE TASTE<br />
+                        THAT BRINGS US TOGETHER
+                    </h2>
+                    <p>우리를 하나로 이어주는 맛</p>
+                </div><!-- .taste-title end -->
+                <div class="taste-wrapper">
+                    <div class="taste-slide">
+                        <div class="taste-left">
+                            <div class="taste-text">
+                                <p class="taste-desc">
+                                    나의 미식 파트너, 코카-콜라와 함께하는 짜릿한 미식 생활!<br>
+                                    2025년, 코카-콜라와 블루리본 서베이가 더 풍성해진<br>
+                                    맛집 리스트와 함께 <2025 레드리본 전국의 맛집>으로 찾아왔다.
+                                </p><!-- .taste-desc end -->
+                                <div class="taste-link">
+                                    <a href="#">보러 가기</a>
+                                    <img src="img/icon-white.svg" alt="">
+                                </div><!-- .taste-link end -->
+                            </div><!-- .taste-text end -->
+
+                            <div class="taste-meta">
+                                <span class="taste-index">01</span>
+                                <h3 class="taste-title">
+                                    코카-콜라 X 블루리본 서베이<br />
+                                    2025 레드리본 전국의 맛집
+                                </h3><!-- .taste-title end -->
+                            </div><!-- .taste-meta end -->
+                        </div><!-- .taste-left end -->
+
+                        <div class="taste-right">
+                            <div class="taste-card">
+                                <img src="img/slide-img-01.png" alt="">
+                            </div><!-- .taste-card end -->
+                        </div><!-- taste-right end -->
+                    </div><!-- .taste-slide end -->
+
+                    <div class="taste-slide">
+                        <div class="taste-left">
+                            <div class="taste-text">
+                                <p class="taste-desc">
+                                    한정판 콤보 메뉴부터 감각적인 전시까지!<br />
+                                    매력이 가능한 공간에서 오감으로 미식생활을 체험해보고 싶다면<br />
+                                    지금 바로 현대카드 쿠킹 라이브러리로 떠나보자!
+                                </p><!-- .taste-desc end -->
+                                <div class="taste-link">
+                                    <a href="#">보러 가기</a>
+                                    <img src="img/icon-white.svg" alt="">
+                                </div><!-- .taste-link end -->
+                            </div><!-- .taste-text end -->
+
+                            <div class="taste-meta">
+                                <span class="taste-index">02</span>
+                                <h3 class="taste-title">
+                                    오감으로 즐기는 미식 체험<br />
+                                    코카-콜라 x 현대카드 쿠킹 라이브러리
+                                </h3><!-- .taste-title end -->
+                            </div><!-- .taste-meta end -->
+                        </div><!-- .taste-left end -->
+
+                        <div class="taste-right">
+                            <div class="taste-card">
+                                <img src="img/slide-img-02.png" alt="">
+                            </div><!-- .taste-card end -->
+                        </div><!-- taste-right end -->
+                    </div><!-- .taste-slide end -->
+
+                    <div class="taste-slide">
+                        <div class="taste-left">
+                            <div class="taste-text">
+                                <p class="taste-desc">
+                                    뷔, 코카-콜라 앰버서더 발탁<br />
+                                    BEST COKE EVER? YES!<br />
+                                    이토록 짜릿한 만남!
+                                </p><!-- .taste-desc end -->
+                                <div class="taste-link">
+                                    <a href="#">보러 가기</a>
+                                    <img src="img/icon-white.svg" alt="">
+                                </div><!-- .taste-link end -->
+                            </div><!-- .taste-text end -->
+
+                            <div class="taste-meta">
+                                <span class="taste-index">03</span>
+                                <h3 class="taste-title">
+                                    코카-콜라와 뷔,<br />
+                                    이토록 짜릿한 만남!
+                                </h3><!-- .taste-title end -->
+                            </div><!-- .taste-meta end -->
+                        </div><!-- .taste-left end -->
+
+                        <div class="taste-right">
+                            <div class="taste-card">
+                                <img src="img/slide-img-03.png" alt="">
+                            </div><!-- .taste-card end -->
+                        </div><!-- taste-right end -->
+                    </div><!-- .taste-slide end -->
+
+                    <div class="taste-slide">
+                        <div class="taste-left">
+                            <div class="taste-text">
+                                <p class="taste-desc">
+                                    코카-콜라의 짜릿함을 느껴봐!<br />
+                                    신흥시장 골목을 따라 스며든 코카-콜라.<br />
+                                    걷는 동안 눈으로 즐기고, 또 맛으로 경험하는<br />
+                                    색다른 미식의 즐거움!
+                                </p><!-- .taste-desc end -->
+                                <div class="taste-link">
+                                    <a href="#">보러 가기</a>
+                                    <img src="img/icon-white.svg" alt="">
+                                </div><!-- .taste-link end -->
+                            </div><!-- .taste-text end -->
+
+                            <div class="taste-meta">
+                                <span class="taste-index">04</span>
+                                <h3 class="taste-title">
+                                    짜릿함 가득 해방촌 미식 골목<br />
+                                    코카-콜라 x 신흥시장
+                                </h3><!-- .taste-title end -->
+                            </div><!-- .taste-meta end -->
+                        </div><!-- .taste-left end -->
+
+                        <div class="taste-right">
+                            <div class="taste-card">
+                                <img src="img/slide-img-04.png" alt="">
+                            </div><!-- .taste-card end -->
+                        </div><!-- taste-right end -->
+                    </div><!-- .taste-slide end -->
+
+                    <div class="taste-slide">
+                        <div class="taste-left">
+                            <div class="taste-text">
+                                <p class="taste-desc">
+                                    오늘을 제대로 즐기기 위해 필요한 건?<br />
+                                    맛있는 음식, 그리고 어떤 요리도 제대로 살려주는 코카-콜라!
+                                </p><!-- .taste-desc end -->
+                                <div class="taste-link">
+                                    <a href="#">Coke & Meal 알아보기</a>
+                                    <img src="img/icon-white.svg" alt="">
+                                </div><!-- .taste-link end -->
+                            </div><!-- .taste-text end -->
+
+                            <div class="taste-meta">
+                                <span class="taste-index">05</span>
+                                <h3 class="taste-title">
+                                    나의 미식 파트너, 코카-콜라
+                                </h3><!-- .taste-title end -->
+                            </div><!-- .taste-meta end -->
+                        </div><!-- .taste-left end -->
+
+                        <div class="taste-right">
+                            <div class="taste-card">
+                                <img src="img/slide-img-05.png" alt="">
+                            </div><!-- .taste-card end -->
+                        </div><!-- taste-right end -->
+                    </div><!-- .taste-slide end -->
+
+                    <div class="taste-slide">
+                        <div class="taste-left">
+                            <div class="taste-text">
+                                <p class="taste-desc">
+                                    해방촌 신흥시장 맛집 가이드
+                                </p><!-- .taste-desc end -->
+                                <div class="taste-link">
+                                    <a href="#">보러 가기</a>
+                                    <img src="img/icon-white.svg" alt="">
+                                </div><!-- .taste-link end -->
+                            </div><!-- .taste-text end -->
+
+                            <div class="taste-meta">
+                                <span class="taste-index">06</span>
+                                <h3 class="taste-title">
+                                    코카-콜라 x 신흥시장<br />
+                                    해방촌 미식 골목에서 찾은 짜릿한 식탁
+                                </h3><!-- .taste-title end -->
+                            </div><!-- .taste-meta end -->
+                        </div><!-- .taste-left end -->
+
+                        <div class="taste-right">
+                            <div class="taste-card">
+                                <img src="img/slide-img-06.png" alt="">
+                            </div><!-- .taste-card end -->
+                        </div><!-- taste-right end -->
+                    </div><!-- .taste-slide end -->
+                </div><!-- .taste-wrapper end -->
+            </div><!-- .inner end -->
+        </section><!-- .taste end -->
+
+
+        <section class="zero-coke">
+            <div class="inner">
+                <div class="coke-player">
+                    <div class="coke-player-ratio">
+                        <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/jXNzIkoynxI?si=ZjsG_au7lQcMb8UE"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div><!-- .coke-player-ratio end -->
+                </div><!-- coke-player end -->
+
+                <div class="coke-copy">
+                    <h2 class="coke-headline">
+                        BEST COKE EVER?<br />
+                        YES, ZERO-COKE!<br />
+                        짜릿함이 필요해!
+                    </h2>
+                    <div class="taste-link">
+                        <a href="#">보러 가기</a>
+                        <img src="img/icon-white.svg" alt="">
+                    </div><!-- .taste-link end -->
+                </div><!-- copy end -->
+            </div><!-- .inner end  -->
+        </section><!-- .zero-coke end -->
+
+        <!-- Sprite 영상 섹션 -->
+        <section class="sprite">
+            <div class="inner">
+                <div class="sprite-player">
+                    <div class="sprite-player-ratio">
+                        <iframe width="560" height="315"
+                            src="https://www.youtube.com/embed/N2Vkb_BoFK4?si=45i_h8rKDBAl0Ce4"
+                            title="Sprite YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div><!-- .sprite-player-ratio end -->
+                </div><!-- .sprite-player end -->
+
+                <div class="sprite-copy">
+                    <h2 class="sprite-headline">
+                        입안에 휘몰아 Chill 상쾌함!<br />
+                        새롭게 선보인 스프라이트<br />
+                        제로 Chill을 즐겨봐!
+                    </h2>
+                    <div class="taste-link">
+                        <a href="#">보러 가기</a>
+                        <img src="img/icon-white.svg" alt="">
+                    </div><!-- .taste-link end -->
+                </div><!-- .sprite-copy end -->
+            </div><!-- .inner end -->
+        </section><!-- .sprite-video end -->
+
+        <section class="brand-marquee">
+            <div class="inner">
+
+                <div class="brand-head">
+                    <h2 class="brand-title">OUR BRANDS<br>
+                        REFRESH THE WORLD</h2>
+                    <p class="brand-desc">코카-브랜드</p>
+                </div>
+
+                <div class="brand-rows">
+
+                    <!-- TOP ROW -->
+                    <div class="brand-row brand-row-top">
+                        <ul class="brand-track">
+                            <li class="brand-card brand--minute-maid">
+                                <a href="#">
+                                    <img src="img/brand-icon-01.png" alt="미닛메이드" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--coca-cola">
+                                <a href="#">
+                                    <img src="img/brand-icon-02.png" alt="코카콜라" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--sprite">
+                                <a href="#">
+                                    <img src="img/brand-icon-03.png" alt="스프라이트" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--dr-papper">
+                                <a href="#">
+                                    <img src="img/brand-icon-04.png" alt="닥터페퍼" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--sunny-ten">
+                                <a href="#">
+                                    <img src="img/brand-icon-05.png" alt="써니텐" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--vio">
+                                <a href="#">
+                                    <img src="img/brand-icon-06.png" alt="휘오" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--matecha">
+                                <a href="#">
+                                    <img src="img/brand-icon-07.png" alt="태양의마테차" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--canada-dry">
+                                <a href="#">
+                                    <img src="img/brand-icon-08.png" alt="캐나다드라이" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--zorzia">
+                                <a href="#">
+                                    <img src="img/brand-icon-09.png" alt="조지아" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--w-cha">
+                                <a href="#">
+                                    <img src="img/brand-icon-10.png" alt="태양의 식후비법 W차" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--toreta">
+                                <a href="#">
+                                    <img src="img/brand-icon-11.png" alt="토레타" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <!-- 반복 블록 복제 (무한 루프용) -->
+                            <li class="brand-card brand--minute-maid">
+                                <a href="#">
+                                    <img src="img/brand-icon-01.png" alt="미닛메이드" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--coca-cola">
+                                <a href="#">
+                                    <img src="img/brand-icon-02.png" alt="코카콜라" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--sprite">
+                                <a href="#">
+                                    <img src="img/brand-icon-03.png" alt="스프라이트" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--dr-papper">
+                                <a href="#">
+                                    <img src="img/brand-icon-04.png" alt="닥터페퍼" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--sunny-ten">
+                                <a href="#">
+                                    <img src="img/brand-icon-05.png" alt="써니텐" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--vio">
+                                <a href="#">
+                                    <img src="img/brand-icon-06.png" alt="휘오" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--matecha">
+                                <a href="#">
+                                    <img src="img/brand-icon-07.png" alt="태양의마테차" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--canada-dry">
+                                <a href="#">
+                                    <img src="img/brand-icon-08.png" alt="캐나다드라이" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--zorzia">
+                                <a href="#">
+                                    <img src="img/brand-icon-09.png" alt="조지아" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--w-cha">
+                                <a href="#">
+                                    <img src="img/brand-icon-10.png" alt="태양의 식후비법 W차" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <li class="brand-card brand--toreta">
+                                <a href="#">
+                                    <img src="img/brand-icon-11.png" alt="토레타" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <!-- ... 다시 반복 ... -->
+                        </ul>
+                    </div>
+
+                    <!-- BOTTOM ROW -->
+                    <div class="brand-row brand-row-bottom">
+                        <ul class="brand-track">
+                            <li class="brand-card brand--cocopam">
+                                <a href="#">
+                                    <img src="img/brand-icon-12.png" alt="코코팜" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--pyeongchang">
+                                <a href="#">
+                                    <img src="img/brand-icon-13.png" alt="강원평창수" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--c-gram">
+                                <a href="#">
+                                    <img src="img/brand-icon-14.png" alt="씨그램" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--fanta">
+                                <a href="#">
+                                    <img src="img/brand-icon-15.png" alt="환타" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--power-ade">
+                                <a href="#">
+                                    <img src="img/brand-icon-16.png" alt="파워에이드" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--fruit">
+                                <a href="#">
+                                    <img src="img/brand-icon-17.png" alt="과일촌" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--pear">
+                                <a href="#">
+                                    <img src="img/brand-icon-18.png" alt="갈아만든배" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--vio-uilm">
+                                <a href="#">
+                                    <img src="img/brand-icon-19.png" alt="휘오울림워터" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--i-rohas">
+                                <a href="#">
+                                    <img src="img/brand-icon-20.png" alt="아이로하스" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--vitamin-water">
+                                <a href="#">
+                                    <img src="img/brand-icon-21.png" alt="비타민워터" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+
+                            <!-- 복제 반복 -->
+                            <li class="brand-card brand--cocopam">
+                                <a href="#">
+                                    <img src="img/brand-icon-12.png" alt="코코팜" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--pyeongchang">
+                                <a href="#">
+                                    <img src="img/brand-icon-13.png" alt="강원평창수" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--c-gram">
+                                <a href="#">
+                                    <img src="img/brand-icon-14.png" alt="씨그램" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--fanta">
+                                <a href="#">
+                                    <img src="img/brand-icon-15.png" alt="환타" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--power-ade">
+                                <a href="#">
+                                    <img src="img/brand-icon-16.png" alt="파워에이드" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--fruit">
+                                <a href="#">
+                                    <img src="img/brand-icon-17.png" alt="과일촌" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--pear">
+                                <a href="#">
+                                    <img src="img/brand-icon-18.png" alt="갈아만든배" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--vio-uilm">
+                                <a href="#">
+                                    <img src="img/brand-icon-19.png" alt="휘오울림워터" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--i-rohas">
+                                <a href="#">
+                                    <img src="img/brand-icon-20.png" alt="아이로하스" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                            <li class="brand-card brand--vitamin-water">
+                                <a href="#">
+                                    <img src="img/brand-icon-21.png" alt="비타민워터" class="brand-logo" />
+                                    <div class="brand-arrow">→</div>
+                                </a>
+                            </li><!-- .brand-card end -->
+                        </ul><!-- .brand-track end -->
+                    </div><!-- .brand-row-bottom end -->
+                </div><!-- .brand-rows -->
+            </div><!-- .inner -->
+        </section><!-- .brand-marquee end -->
+
+        <section class="cokeplay-best">
+            <div class="inner">
+
+                <!-- 섹션 헤더 -->
+                <div class="best-head">
+                    <div class="title-wrap">
+                        <h2 class="best-title">COKE PLAY REWARD BEST</h2>
+                        <p class="best-desc">오직 코카-플레이에서만! COKEPLAY 리워드 굿즈</p>
+                    </div><!-- .title-wrap end -->
+                    <div class="taste-link">
+                        <a href="#">스토어 가기</a>
+                        <img src="img/icon-white.svg" alt="">
+                    </div><!-- .taste-link end -->
+                </div><!-- .best-head end -->
+
+                <!-- 리워드 카드 리스트 -->
+                <ul class="best-list">
+                    <li class="best-item">
+                        <a href="#">
+                            <div class="best-thumb"><img src="img/goods-01.png" alt="패션"></div>
+                            <p class="best-name">패션</p>
+                        </a>
+                    </li><!-- .best-item end -->
+                    <li class="best-item">
+                        <a href="#">
+                            <div class="best-thumb"><img src="img/goods-02.png" alt="홈데코"></div>
+                            <p class="best-name">홈데코</p>
+                        </a>
+                    </li><!-- .best-item end -->
+                    <li class="best-item">
+                        <a href="#">
+                            <div class="best-thumb"><img src="img/goods-03.png" alt="디지털/가전"></div>
+                            <p class="best-name">디지털/가전</p>
+                        </a>
+                    </li><!-- .best-item end -->
+                    <li class="best-item">
+                        <a href="#">
+                            <div class="best-thumb"><img src="img/goods-04.png" alt="엔터테인먼트"></div>
+                            <p class="best-name">엔터테인먼트</p>
+                        </a>
+                    </li><!-- .best-item end -->
+                    <li class="best-item">
+                        <a href="#">
+                            <div class="best-thumb"><img src="img/goods-05.png" alt="여행"></div>
+                            <p class="best-name">여행</p>
+                        </a>
+                    </li><!-- .best-item end -->
+                    <li class="best-item">
+                        <a href="#">
+                            <div class="best-thumb"><img src="img/goods-06.png" alt="키친"></div>
+                            <p class="best-name">키친</p>
+                        </a>
+                    </li><!-- .best-item end -->
+                </ul><!-- .best-list end -->
+            </div><!-- .inner end -->
+        </section><!-- .cokeplay-best end -->
+
+        <section class="sustainability" id="sustainability">
+            <div class="sust-wrap">
+                <!-- 움직이는 배경 이미지 -->
+                <img class="sust-bg" src="img/sustainability.png" alt="지속가능성 배경" data-scroll="-18" data-start="top">
+
+                <div class="text-wrap">
+                    <h2 class="sust-title">SUSTAINABILITY</h2>
+                    <p class="sust-sub">지속 가능한 미래</p>
+                    <p class="sust-desc">
+                        지속 가능한 미래를 만들기 위한 코카-콜라의 다양한 활동들을 만나보세요.<br />
+                        전 세계 사람들과 숍과 지역사회에 긍정적인 변화를 만들기 위해 노력하고 있습니다.
+                    </p><!-- .sust-desc end -->
+                    <div class="taste-link">
+                        <a href="#">보러 가기
+                            <img src="img/icon-white.svg" alt="">
+                        </a>
+                    </div><!-- .taste-link end -->
+                </div><!-- .text-wrap end -->
+            </div><!-- .sust-wrap end -->
+        </section><!-- .sustainability end -->
+    </main>
+
+    <footer class="footer">
+        <div class="inner">
+
+            <!-- 왼쪽: 로고 + 카피 -->
+            <div class="footer-left">
+                <img src="img/red_logo.svg" alt="Coca-Cola" class="footer-logo" />
+                <a href="#" class="footer-link">Coke PLAY →</a>
+                <p class="copyright">© 2024 The Coca-Cola Company. 판권소유</p>
+            </div>
+
+            <!-- 오른쪽: 링크 영역 -->
+            <div class="footer-right">
+
+                <!-- 그룹 1 -->
+                <ul class="footer-menu">
+                    <li>소개</li>
+                    <li><a href="#">기업 소개</a></li>
+                    <li><a href="#">히스토리</a></li>
+                    <li><a href="#">채용</a></li>
+                </ul>
+
+                <!-- 그룹 2 -->
+                <ul class="footer-menu">
+                    <li>도움이 필요하세요?</li>
+                    <li><a href="#">사이트 맵</a></li>
+                    <li><a href="#">광고 안내</a></li>
+                </ul>
+
+                <!-- 그룹 3 -->
+                <ul class="footer-menu">
+                    <li>법적 고지</li>
+                    <li><a href="#">이용 약관</a></li>
+                    <li><a href="#">쿠키 정책</a></li>
+                    <li><a href="#">쿠키 설정</a></li>
+                </ul>
+
+                <!-- SNS -->
+                <ul class="footer-sns">
+                    <li>SNS</li>
+                    <li><a href="#" target="_blank">YOUTUBE</a></li>
+                    <li><a href="#" target="_blank">INSTAGRAM</a></li>
+                    <li><a href="#" target="_blank">FACEBOOK</a></li>
+                    <li><a href="#" target="_blank">X(TWITTER)</a></li>
+                </ul>
+
+            </div><!-- .footer-right end -->
+        </div><!-- .inner end -->
+    </footer>
+
+</body>
+
+</html>
