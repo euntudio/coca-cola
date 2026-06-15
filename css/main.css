@@ -423,7 +423,7 @@ body {
 .coke-player-ratio {
     position: relative;
     width: 100%;
-    max-width: 720px;
+    max-width: 954px;
     aspect-ratio: 16 / 9;
     border-radius: 10px;
     overflow: hidden;
@@ -522,7 +522,7 @@ body {
 .sprite-player-ratio {
     position: relative;
     width: 100%;
-    max-width: 720px;
+    max-width: 954px;
     aspect-ratio: 16 / 9;
     border-radius: 10px;
     overflow: hidden;

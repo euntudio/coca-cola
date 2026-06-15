@@ -11,6 +11,7 @@
         <script src="lib/gsap.min.js"></script>
         <script src="lib/ScrollTrigger.min.js"></script>
         <script src="lib/SplitText.min.js"></script>
+        <script src="https://www.youtube.com/iframe_api"></script>
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -32,7 +33,7 @@
                     y: 400,
                     ease: "none",
                     scrollTrigger: {
-                        trigger: ".img2", 
+                        trigger: ".img2",
                         start: "top 90%",
                         end: "top 0%",
                         scrub: true,
@@ -258,6 +259,62 @@
                     }
                 );
 
+                window.onYouTubeIframeAPIReady = function () {
+
+                    const cokePlayer = new YT.Player('cokeVideo', {
+                        events: {
+                            onReady: function () {
+                                setupVideoTrigger(
+                                    ".zero-coke",
+                                    cokePlayer
+                                );
+                            }
+                        }
+                    });
+
+                    const spritePlayer = new YT.Player('spriteVideo', {
+                        events: {
+                            onReady: function () {
+                                setupVideoTrigger(
+                                    ".sprite",
+                                    spritePlayer
+                                );
+                            }
+                        }
+                    });
+
+                    function setupVideoTrigger(sectionClass, player) {
+
+                        ScrollTrigger.create({
+                            trigger: sectionClass,
+                            start: "top 70%",
+                            end: "bottom 30%",
+
+                            onEnter: () => {
+                                player.mute();
+                                player.playVideo();
+                            },
+
+                            onEnterBack: () => {
+                                player.mute();
+                                player.playVideo();
+                            },
+
+                            onLeave: () => {
+                                player.pauseVideo();
+                                player.seekTo(0);
+                            },
+
+                            onLeaveBack: () => {
+                                player.pauseVideo();
+                                player.seekTo(0);
+                            }
+                        });
+
+                    }
+
+                };
+
                 //coke 텍스트
                 const splitZeroCoke = new SplitText(".coke-headline", { type: "lines" });
                 gsap.from(splitZeroCoke.lines, {
@@ -348,7 +405,7 @@
 
         </div><!-- .inner end -->
     </header>
-
+    ㄹ
     <main class="main">
         <section class="main-visual">
             <div class="fixed-center">
@@ -610,13 +667,13 @@
             <div class="inner">
                 <div class="coke-player">
                     <div class="coke-player-ratio">
-                        <iframe width="560" height="315"
-                            src="https://www.youtube.com/embed/jXNzIkoynxI?si=ZjsG_au7lQcMb8UE"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div><!-- .coke-player-ratio end -->
-                </div><!-- coke-player end -->
+                        <iframe id="cokeVideo" width="560" height="315"
+                            src="https://www.youtube.com/embed/jXNzIkoynxI?enablejsapi=1&mute=1&loop=1&playlist=jXNzIkoynxI"
+                            title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
 
                 <div class="coke-copy">
                     <h2 class="coke-headline">
@@ -637,11 +694,11 @@
             <div class="inner">
                 <div class="sprite-player">
                     <div class="sprite-player-ratio">
-                        <iframe width="560" height="315"
-                            src="https://www.youtube.com/embed/N2Vkb_BoFK4?si=45i_h8rKDBAl0Ce4"
-                            title="Sprite YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        <iframe id="spriteVideo" width="560" height="315"
+                            src="https://www.youtube.com/embed/N2Vkb_BoFK4?enablejsapi=1&mute=1&loop=1&playlist=N2Vkb_BoFK4"
+                            title="Sprite YouTube video player" frameborder="0" allow="autoplay; encrypted-media"
+                            allowfullscreen>
+                        </iframe>
                     </div><!-- .sprite-player-ratio end -->
                 </div><!-- .sprite-player end -->
 
