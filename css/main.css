@@ -225,7 +225,7 @@ body {
 
 .bottle {
     padding-top: 100px;
-    background: url('../img/wave.svg') center center / 100% no-repeat;
+    background: url('../img/wave-01.svg') center center / 100% no-repeat;
 }
 
 /* 가로 트랙 뷰포트(창문 역할) */
@@ -278,11 +278,15 @@ body {
     position: relative;
     color: #fff;
     padding: 180px 0;
+    overflow: hidden;
 }
+
 .taste .inner {
     max-width: 1920px;
     width: calc(100% - 474px);
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .taste .inner .taste-title h2 {
@@ -301,19 +305,43 @@ body {
     padding: 180px 0 360px;
     position: relative;
     height: 708px;
+    overflow: visible;
 }
 
-/* 모든 슬라이드는 같은 자리에 겹쳐놓고 우리가 어떤 걸 보여줄지 결정 */
+/* SVG 고정 배경 */
+.taste-wrapper::before {
+    content: '';
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 1920px;
+    height: 1920px;
+
+    background: url('../img/wave-02.svg') center center / contain no-repeat;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 슬라이드가 SVG 위로 올라오게 */
 .taste-slide {
     width: 100%;
     display: flex;
     justify-content: space-between;
+
     position: absolute;
+
     opacity: 0;
     transform: translateX(40px);
-    /* 화면에 들어오기 전 오른쪽 쪽으로 살짝 대기 */
+
     pointer-events: none;
     will-change: opacity, transform;
+
+    z-index: 1;
 }
 
 .taste-slide.is-active {
@@ -366,7 +394,7 @@ body {
 }
 
 .taste .taste-link img {
-    width: 18px;
+    width: 24px;
     height: auto;
 }
 
@@ -458,7 +486,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: 500;
     color: #fff;
     margin-top: 100px;
@@ -470,8 +498,8 @@ body {
 }
 
 .zero-coke .coke-copy .taste-link img {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: auto;
 }
 
 /* 반응형 */
@@ -557,7 +585,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 24px;
     font-weight: 500;
     color: #fff;
     margin-top: 100px;
@@ -569,8 +597,8 @@ body {
 }
 
 .sprite .taste-link img {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: auto;
 }
 
 /* 반응형 */
@@ -1308,7 +1336,7 @@ body {
 /* === Sustainability section === */
 .sustainability {
     position: relative;
-    min-height: 120vh;
+    min-height: 100vh;
     /* 여유 있는 스크롤 구간 */
     display: block;
     color: #fff;
@@ -1318,22 +1346,14 @@ body {
 /* 배경 이미지 컨테이너 */
 .sustainability .sust-wrap {
     position: relative;
-    height: 120vh;
+    height: 100vh;
     /* 이미지가 움직일 공간 */
 }
 
 /* 움직이는 배경 이미지 */
 .sustainability .sust-bg {
     position: absolute;
-    left: 50%;
-    top: 10%;
-    /* 살짝 크게 깔아서 가장자리 노출 방지 */
     width: 100vw;
-    height: 120vh;
-    transform: translateX(-50%);
-    object-fit: 100%;
-    will-change: transform;
-    filter: saturation(1.05) contrast(1.05);
 }
 
 /* 가독성용 화면 전체 그라데이션 (박스 대신 분위기만) */
@@ -1351,8 +1371,8 @@ body {
 
 /* 텍스트 영역: 스티키로 고정 느낌 */
 .sustainability .text-wrap {
-    position: sticky;
-    top: 30vh;
+    position: relative;
+    top: 150px;
     /* 스크롤 시 머무는 높이 */
     max-width: 1920px;
     margin: 0 auto;
@@ -1373,9 +1393,9 @@ body {
 }
 
 .sust-desc {
-    margin-top: 80px;
+    margin-top: 60px;
     max-width: 1920px;
-    font-size: clamp(16px, 1.5vw, 20px);
+    font-size: 20px;
     line-height: 1.7;
     opacity: .95;
 }
@@ -1383,9 +1403,9 @@ body {
 .sustainability .taste-link {
     display: inline-flex;
     align-items: center;
+    font-size: 20px;
     gap: 10px;
-    margin-top: 80px;
-    font-weight: 700;
+    margin-top: 40px;
 }
 
 .sustainability .taste-link a {
@@ -1393,7 +1413,7 @@ body {
 }
 
 .sustainability .taste-link a img {
-    width: 18px;
+    width: 24px;
 }
 
 /* 모바일 튜닝 */
