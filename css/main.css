@@ -67,6 +67,20 @@ body {
     gap: 30px;
 }
 
+.header .inner .util .cokeplay {
+    display: block;
+    width: 120px;
+    height: 32px;
+
+    background: url('../img/cokeplay-logo.svg') center / contain no-repeat;
+
+    transition: 0.2s;
+}
+
+.header .inner .util .cokeplay:hover {
+    background-image: url('../img/cokeplay-hover.svg');
+}
+
 /* 메인 비주얼 */
 .main-visual {
     position: relative;
@@ -390,11 +404,11 @@ body {
 .taste .taste-link a {
     color: #fff;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .taste .taste-link img {
-    width: 24px;
+    width: 20px;
     height: auto;
 }
 
@@ -1498,6 +1512,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    font-size: 18px
 }
 
 .footer-menu a,
@@ -1516,7 +1531,7 @@ body {
 
 /* SNS는 살짝 강조 */
 .footer-sns a {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 20px;
 }
 
