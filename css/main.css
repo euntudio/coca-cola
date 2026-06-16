@@ -81,6 +81,19 @@ body {
     background-image: url('../img/cokeplay-hover.svg');
 }
 
+.header .inner .util .search {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url('../img/icon-search.svg') center / contain no-repeat;
+
+    transition: 0.2s;
+}
+
+.header .inner .util .search:hover {
+    background-image: url('../img/icon-search-hover.svg');
+}
+
 /* 메인 비주얼 */
 .main-visual {
     position: relative;
@@ -1635,32 +1648,21 @@ body {
 .footer-menu,
 .footer-sns {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 30px;
-    font-size: 18px
+    font-size: 18px 
 }
 
-.footer-menu a,
-.footer-sns a {
-    color: #ccc;
-    font-size: 20px;
-    text-decoration: none;
-    transition: color .2s ease, opacity .2s ease;
+.footer-menu li a,
+.footer-sns li a {
+    color: rgb(255, 255, 255, 0.7);
 }
 
-.footer-menu a:hover,
-.footer-sns a:hover {
+.footer-menu li:hover a,
+.footer-sns li:hover a {
     color: #fff;
-    opacity: 0.8;
-}
-
-/* SNS는 살짝 강조 */
-.footer-sns a {
-    font-weight: 500;
-    font-size: 20px;
+    font-weight: bold;
 }
 
 .footer-menu>li:first-child {
