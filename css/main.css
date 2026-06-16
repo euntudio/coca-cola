@@ -372,12 +372,14 @@ body {
     width: 60px;
     height: 60px;
     background: url('../img/icon-white.svg') center / contain no-repeat;
+    opacity: 0.5;
 }
 
 .taste-slide.is-active:hover .taste-link .shortcut {
     width: 60px;
     height: 60px;
-    background: url('../img/icon-red-full.svg') center / contain no-repeat;
+    background: url('../img/icon-red.svg') center / contain no-repeat;
+    opacity: 1;
 }
 
 
@@ -385,9 +387,9 @@ body {
     width: 708px;
 }
 
-.taste-slide .taste-right .taste-card img:hover {
+.taste-slide.is-active:hover .taste-right .taste-card img {
     filter:
-        brightness(1.08);
+        brightness(1.1);
 }
 
 @media (max-width:768px) {
@@ -410,7 +412,14 @@ body {
 }
 
 .taste-desc {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.taste-slide.is-active:hover .taste-desc {
+    color: rgba(255, 255, 255, 1);
     line-height: 1.6;
     font-size: 24px;
     margin-bottom: 20px;
@@ -449,7 +458,7 @@ body {
 
     background-image: linear-gradient(to right,
             #D4080B 50%,
-            #ffffff 50%);
+            rgb(255, 255, 255,0.5) 50%);
 
     background-size: 200% 100%;
     background-position: 100% 0;
@@ -457,7 +466,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    transition: background-position 0.4s ease;
+    transition: background-position 0.5s ease;
 }
 
 /* 제목 기본 */
@@ -475,7 +484,7 @@ body {
 
     background-image: linear-gradient(to right,
             #D4080B 50%,
-            #ffffff 50%);
+            rgb(255, 255, 255,0.5) 50%);
 
     background-size: 200% 100%;
     background-position: 100% 0;
@@ -483,7 +492,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    transition: background-position 0.6s ease;
+    transition: background-position 0.5s ease;
 }
 
 /* hover */
@@ -575,8 +584,24 @@ body {
 }
 
 .zero-coke .coke-copy .taste-link a {
-    color: #fff;
+    color: rgb(255, 255, 255,0.5);
     text-decoration: none;
+}
+
+.zero-coke .coke-copy .taste-link .shortcut {
+    width: 30px;
+    height: 30px;
+    background: url('../img/icon-white.svg') center / contain no-repeat;
+    opacity: 0.5;
+}
+
+.zero-coke .coke-copy .taste-link:hover a {
+    color: #D4080B;
+}
+
+.zero-coke .coke-copy .taste-link:hover .shortcut {
+    background: url('../img/icon-red.svg') center / contain no-repeat;
+    opacity: 1;
 }
 
 .zero-coke .coke-copy .taste-link img {
@@ -672,15 +697,24 @@ body {
     color: #fff;
     margin-top: 100px;
 }
-
+.sprite .taste-link:hover a{
+    color: #9BE15D;
+}
 .sprite .taste-link a {
-    color: #fff;
+    color: rgb(255, 255, 255,0.5);
     text-decoration: none;
 }
 
-.sprite .taste-link img {
-    width: 24px;
-    height: auto;
+.sprite .taste-link .shortcut {
+    width: 30px;
+    height: 30px;
+    background: url('../img/icon-white.svg') center / contain no-repeat;
+    opacity: 0.5;
+}
+
+.sprite .taste-link:hover .shortcut {
+    background: url('../img/icon-green.svg') center / contain no-repeat;
+    opacity: 1;
 }
 
 /* 반응형 */
@@ -1260,12 +1294,28 @@ body {
 }
 
 .cokeplay-best .best-head .taste-link a {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.5);
     font-size: 24px;
     font-weight: 600;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
+}
+
+.cokeplay-best .best-head .taste-link .shortcut {
+    width: 30px;
+    height: 30px;
+    background: url('../img/icon-white.svg') center / contain no-repeat;
+    opacity: 0.5;
+}
+
+.cokeplay-best .best-head .taste-link:hover .shortcut {
+    background: url('../img/icon-red.svg') center / contain no-repeat;
+    opacity: 1;
+}
+
+.cokeplay-best .best-head .taste-link:hover a {
+    color: #D4080B;
 }
 
 .cokeplay-best .best-head .taste-link img {
@@ -1349,7 +1399,7 @@ body {
 }
 
 .cokeplay-best .best-item:hover .best-name {
-    color: #fff;
+    color: #D4080B;
 }
 
 /* 반응형: 태블릿 */
@@ -1454,7 +1504,7 @@ body {
 /* 텍스트 영역: 스티키로 고정 느낌 */
 .sustainability .text-wrap {
     position: relative;
-    top: 150px;
+    top: 110px;
     /* 스크롤 시 머무는 높이 */
     max-width: 1920px;
     margin: 0 auto;
@@ -1477,7 +1527,7 @@ body {
 .sust-desc {
     margin-top: 60px;
     max-width: 1920px;
-    font-size: 20px;
+    font-size: 24px;
     line-height: 1.7;
     opacity: .95;
 }
@@ -1485,17 +1535,21 @@ body {
 .sustainability .taste-link {
     display: inline-flex;
     align-items: center;
-    font-size: 20px;
+    font-size: 24px;
     gap: 10px;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
-.sustainability .taste-link a {
-    color: #fff;
+.sustainability .taste-link .shortcut {
+    width: 60px;
+    height: 60px;
+    background: url('../img/icon-white.svg') center / contain no-repeat;
+    opacity: 0.5;
 }
 
-.sustainability .taste-link a img {
-    width: 24px;
+.sustainability .taste-link:hover .shortcut {
+    background: url('../img/icon-white.svg') center / contain no-repeat;
+    opacity: 1;
 }
 
 /* 모바일 튜닝 */
